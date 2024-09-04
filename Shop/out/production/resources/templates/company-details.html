@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Applications</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #4CAF50;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin: 10px 0;
+        }
+
+        .applications {
+            margin-top: 20px;
+        }
+
+        .applications ul {
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .applications li {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .applications a {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .applications a:hover {
+            color: #4CAF50;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>채용공고</h2>
+
+    <!-- Display the company details -->
+    <p><strong>기업명:</strong> <span th:text="${company.company}">Company Name</span></p>
+    <p><strong>직군:</strong> <span th:text="${company.job}">Job Title</span></p>
+    <p><strong>하는일:</strong> <span th:text="${company.role}">Role</span></p>
+    <p><strong>요구사항:</strong> <span th:text="${company.conditions}">Conditions</span></p>
+    <p><strong>우대사항:</strong> <span th:text="${company.prefered}">Preferred</span></p>
+
+    <!-- Applications List -->
+    <div class="applications" th:if="${name} == ${company.company}">
+        <h4>Applications List:</h4>
+        <ul>
+            <li th:each="appli : ${myApp}">
+                <a th:href="@{/human/{id}/{name}(id=${id}, name=${appli})}"
+                   th:text="${appli} + ' 님 열람하기'"></a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Form to submit a POST request -->
+    <form th:action="@{/Applied}" method="post">
+        <!-- Hidden input to send the company ID -->
+        <input type="hidden" th:name="companyId" th:value="${company.id}"/>
+        <!-- Hidden input to send the applicant's name -->
+        <input type="hidden" th:name="name" th:value="${name}"/>
+
+        <button type="submit" class="btn">지원하기</button>
+    </form>
+</div>
+</body>
+</html>

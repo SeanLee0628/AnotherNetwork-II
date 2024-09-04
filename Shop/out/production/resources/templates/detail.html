@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Applicant Detail</title>
+</head>
+<body>
+<h1>Applicant Details</h1>
+
+<!-- id 값을 출력 -->
+<p>Applicant ID: <span th:text="${id}"></span></p>
+<p>Applicant Name: <span th:text="${applicant}"></span></p>
+<p>Company Name: <span th:text="${company}"></span></p>
+
+<p>여기에 추가 정보가 표시됩니다.</p>
+
+<!-- 열람 버튼을 추가 -->
+<form th:action="@{/addCompanyToApplicant}" method="POST">
+    <!-- Hidden input to send the applicant ID -->
+    <input type="hidden" name="applicantId" th:value="${id}"/>
+    <!-- Hidden input to specify the company name -->
+    <input type="hidden" name="companyName" th:value="${company}"/>
+
+    <button type="submit">열람</button>
+</form>
+</body>
+</html>

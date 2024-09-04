@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px; /* 넓이 확대 */
+            margin: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px; /* 둥근 테두리 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #555;
+        }
+
+        .company-list {
+            display: grid; /* 그리드 사용 */
+            grid-template-columns: repeat(3, 1fr); /* 한 줄에 세 개씩 */
+            gap: 20px; /* 박스 간격 */
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .company-card {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 12px; /* 둥근 테두리 */
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .company-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+        }
+
+        .company-card p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .company-list {
+                grid-template-columns: repeat(2, 1fr); /* 화면이 좁아지면 두 개씩 */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .company-list {
+                grid-template-columns: 1fr; /* 더 좁아지면 한 개씩 */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>채용공고</h1>
+
+    <!-- Display the applicant's name at the top -->
+    <p><span th:text="${name} + '님 환영합니다!'"></span></p>
+
+    <ul class="company-list">
+        <!-- Iterate over the list of Company objects -->
+        <li class="company-card" th:each="company : ${result}">
+            <!-- Make the company name clickable to navigate to the DetailCompany page -->
+            <a th:href="@{/company/{id}(id=${company.id}, name=${name})}">
+                <h2 th:text="${company.job}"></h2> <!-- Display the company name -->
+            </a>
+            <p th:text="'업체명: ' + ${company.company}"></p> <!-- Display the role -->
+            <p th:text="'하는일: ' + ${company.job}"></p>
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>

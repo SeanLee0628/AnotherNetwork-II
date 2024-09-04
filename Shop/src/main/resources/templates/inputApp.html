@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Applicant Registration</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #kakao-login-btn {
+            background-color: #FEE500;
+            border: none;
+            border-radius: 6px;
+            color: #3c1e1e;
+            font-size: 16px;
+            padding: 12px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        #kakao-login-btn:hover {
+            background-color: #ecd800;
+        }
+
+        #login-result {
+            margin-top: 15px;
+            color: green;
+            font-weight: bold;
+        }
+
+        form {
+            margin-top: 20px;
+            text-align: left;
+            display: none; /* 폼을 초기에는 숨김 */
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Applicant Registration</h2>
+
+    <!-- 카카오 로그인 버튼 -->
+    <button id="kakao-login-btn">카카오로 로그인</button>
+    <div id="login-result" style="display: none;"></div>
+
+    <!-- 이름, 직군 등을 입력받는 폼 -->
+    <form id="applicant-form" action="/addApplicant" method="POST">
+        <label for="name">이름</label>
+        <input id="name" name="name" required>
+
+        <label for="role">직군</label>
+        <input id="role" name="role" required>
+
+        <label for="stacks">스택</label>
+        <input id="stacks" name="stacks" required>
+
+        <label for="intro">자기소개</label>
+        <input id="intro" name="intro" required>
+
+        <label for="feedbacks">피드백</label>
+        <input id="feedbacks" name="feedbacks" required>
+
+        <button type="submit">등록</button>
+    </form>
+</div>
+
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+<script>
+    // SDK 초기화 (애플리케이션 JavaScript 키 입력)
+    Kakao.init('43d7aaccb52729dd204f27b1f9702715');
+    console.log(Kakao.isInitialized()); // SDK 초기화 여부를 확인하는 로그 출력
+
+    // 카카오 로그인 버튼 클릭 이벤트 핸들러
+    document.getElementById('kakao-login-btn').addEventListener('click', function() {
+        Kakao.Auth.login({
+            success: function(authObj) {
+                console.log(authObj); // 로그인 성공 시 받아오는 데이터
+                // 사용자 정보 요청
+                Kakao.API.request({
+                    url: '/v2/user/me',
+                    success: function(res) {
+                        console.log(res); // 사용자 정보
+                        // 로그인 성공 메시지 표시
+                        document.getElementById('login-result').style.display = 'block';
+                        document.getElementById('login-result').innerText = '로그인 되었습니다.';
+
+                        // 로그인 성공 시 입력 폼 표시
+                        document.getElementById('applicant-form').style.display = 'block';
+                    },
+                    fail: function(error) {
+                        console.log(error);
+                    }
+                });
+            },
+            fail: function(err) {
+                console.log(err); // 로그인 실패 시 오류 정보
+                alert('로그인 실패: ' + err.error_description); // 로그인 실패 시 알림
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Form</title>
+    <style>
+        /* 전체 폼을 정렬하고 가운데 정렬 */
+        .form-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #f9f9f9;
+        }
+
+        /* 입력 필드와 레이블 스타일 */
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        /* 제출 버튼 스타일 */
+        .submit-btn {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <form action="/addCompany" method="POST">
+        <!-- 각 입력 필드를 그룹으로 묶어 스타일링 -->
+        <div class="form-group">
+            <label for="company">상호명</label>
+            <input type="text" name="company" id="company">
+        </div>
+        <div class="form-group">
+            <label for="role">직군</label>
+            <input type="text" name="role" id="role">
+        </div>
+        <div class="form-group">
+            <label for="job">하는일</label>
+            <input type="text" name="job" id="job">
+        </div>
+        <div class="form-group">
+            <label for="conditions">요구사항</label>
+            <input type="text" name="conditions" id="conditions">
+        </div>
+        <div class="form-group">
+            <label for="prefered">우대사항</label>
+            <input type="text" name="prefered" id="prefered">
+        </div>
+        <div class="form-group">
+            <label for="phone">전화번호</label>
+            <input type="text" name="phone" id="phone">
+        </div>
+        <button type="submit" class="submit-btn">버튼</button>
+    </form>
+</div>
+
+</body>
+
+</html>

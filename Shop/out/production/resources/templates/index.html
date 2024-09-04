@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company List</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2, h3 {
+            color: #333;
+            text-align: center;
+        }
+
+        .company-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .company-card {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .company-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        #selected{
+            border: 2px solid black;
+            border-radius: 12px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #4CAF50;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        h2 {
+            margin: 0;
+            font-size: 18px;
+        }
+
+        .company-card p {
+            margin: 5px 0;
+            font-size: 14px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Registered Companies</h2>
+    <h3 th:text="${comp} + '님 환영합니다!'"></h3>
+
+    <div class="company-container">
+        <!-- 먼저 company.company와 comp가 같은 항목을 출력 -->
+        <div id="selected" class="company-card" th:each="company : ${result}" th:if="${company.company} == ${comp}">
+            <a th:href="@{/app/{id}/{company}(id=${company.id}, company=${comp})}" th:text="${company.job}">Company Job</a>
+            <p th:text="'포지션: ' + ${company.role}">Role: Developer</p>
+        </div>
+
+        <!-- 나머지 company.company와 comp가 같지 않은 항목을 출력 -->
+        <div class="company-card" th:each="company : ${result}" th:if="${company.company} != ${comp}">
+            <a th:href="@{/app/{id}/{company}(id=${company.id}, company=${comp})}" th:text="${company.job}">Company Job</a>
+            <p th:text="'포지션: ' + ${company.role}">Role: Developer</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
